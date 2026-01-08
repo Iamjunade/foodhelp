@@ -23,6 +23,7 @@ import ArchitectureDoc from './components/ArchitectureDoc';
 import LandingPage from './components/LandingPage';
 import MainLayout from './components/MainLayout';
 import RestaurantRegistration from './components/RestaurantRegistration';
+import NGORegistration from './components/NGORegistration';
 import { subscribeToAuthChanges, signInWithGoogle, signOutUser, UserProfile } from './services/authService';
 import { subscribeToDonations, updateDonationStatus } from './services/firestoreService';
 
@@ -326,6 +327,14 @@ const App: React.FC = () => {
 
   // If user is in Registration View
   if (view === 'REGISTRATION') {
+    if (userRole === UserRole.RECIPIENT) {
+      return (
+        <NGORegistration
+          currentUser={currentUser}
+          onComplete={() => setView('HOME')}
+        />
+      );
+    }
     return (
       <RestaurantRegistration
         currentUser={currentUser}

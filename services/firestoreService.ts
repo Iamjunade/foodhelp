@@ -62,3 +62,16 @@ export const registerRestaurant = async (profile: Omit<import("../types").Restau
         throw error;
     }
 };
+
+export const registerNGO = async (profile: Omit<import("../types").NGOProfile, "isVerified" | "createdAt">) => {
+    try {
+        await addDoc(collection(db, "ngos"), {
+            ...profile,
+            isVerified: false,
+            createdAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error registering NGO: ", error);
+        throw error;
+    }
+};
