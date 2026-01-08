@@ -22,6 +22,7 @@ import ImpactStats from './components/ImpactStats';
 import ArchitectureDoc from './components/ArchitectureDoc';
 import LandingPage from './components/LandingPage';
 import MainLayout from './components/MainLayout';
+import RestaurantRegistration from './components/RestaurantRegistration';
 import { subscribeToAuthChanges, signInWithGoogle, signOutUser, UserProfile } from './services/authService';
 import { subscribeToDonations, updateDonationStatus } from './services/firestoreService';
 
@@ -29,7 +30,7 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState<UserRole>(UserRole.DONOR);
   const [donations, setDonations] = useState<Donation[]>([]);
-  const [view, setView] = useState<'HOME' | 'POST' | 'IMPACT' | 'DOCS'>('HOME');
+  const [view, setView] = useState<'HOME' | 'POST' | 'IMPACT' | 'DOCS' | 'REGISTRATION'>('HOME');
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,10 +43,20 @@ const App: React.FC = () => {
         setIsAuthenticated(true);
         setCurrentUser(user);
         setUserRole(user.role);
+
+        // For Demo: If user is a DONOR (Restaurant), show registration first
+        // In a real app, we check a 'isProfileComplete' flag
+        if (user.role === UserRole.DONOR) {
+          setView('REGISTRATION');
+        } else {
+          setView('HOME');
+        }
+
       } else {
         setIsAuthenticated(false);
         setCurrentUser(null);
         setUserRole(UserRole.DONOR);
+        setView('HOME');
       }
       setIsLoading(false);
     });
@@ -76,10 +87,14 @@ const App: React.FC = () => {
     }
   }, [userRole]);
 
-  const handleLogin = async () => {
+  const handleLogin = async (role: UserRole) => {
     setIsLoading(true);
+    // In a real app, we would pass the role to the auth service or update profile after sign in
+    // For this demo, we can assume the auth service handles basic sign in
+    // and we might handle role-specific logic after auth state updates.
+    // However, signInWithGoogle doesn't accept role directly in our current implementation.
+    // We will stick to the generic sign in and rely on the useEffect above to route logic.
     await signInWithGoogle();
-    // Auth state change listener will handle the rest
   };
 
   const handleLogout = async () => {
@@ -99,16 +114,6 @@ const App: React.FC = () => {
 
   const handlePostDonation = async (items: FoodItem) => {
     if (!currentUser) return;
-
-    // Donation creation is now handled by the form component talking to service directly usually
-    // OR we pass this handler which calls the service. 
-    // Ideally DonationForm calls the service. 
-    // But for now, let's keep the prop structure and implement the service call here or updating locally? 
-    // The previous implementation was local state update. 
-    // We will change DonationForm to call the service, OR call it here.
-    // Let's call it here to keep props simple for now, or better:
-    // Update DonationForm to use the service directly, and remove this handler logic content?
-    // Actually, let's just make sure the View switches back to HOME after post.
     setView('HOME');
   };
 
@@ -316,7 +321,17 @@ const App: React.FC = () => {
         </div>
       );
     }
-    return <LandingPage onLogin={handleLogin} />;
+    return <LandingPage onLogin={(role) => handleLogin(role)} />;
+  }
+
+  // If user is in Registration View
+  if (view === 'REGISTRATION') {
+    return (
+      <RestaurantRegistration
+        currentUser={currentUser}
+        onComplete={() => setView('HOME')}
+      />
+    );
   }
 
   return (
