@@ -19,7 +19,7 @@ export interface UserProfile {
     photoURL: string | null;
 }
 
-export const signInWithGoogle = async (): Promise<UserProfile | null> => {
+export const signInWithGoogle = async (desiredRole?: UserRole): Promise<UserProfile | null> => {
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
@@ -28,18 +28,18 @@ export const signInWithGoogle = async (): Promise<UserProfile | null> => {
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
 
-        let role = UserRole.DONOR; // Default role
+        let role = desiredRole || UserRole.DONOR; // Default role if not provided
 
         if (userDoc.exists()) {
             role = userDoc.data().role as UserRole;
         } else {
-            // Create new user profile with default role
+            // Create new user profile with selected role or default
             await setDoc(userDocRef, {
                 uid: user.uid,
                 email: user.email,
                 displayName: user.displayName,
                 photoURL: user.photoURL,
-                role: UserRole.DONOR, // Default to DONOR, user can change later in settings if implemented
+                role: role,
                 createdAt: new Date().toISOString()
             });
         }

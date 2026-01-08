@@ -90,12 +90,8 @@ const App: React.FC = () => {
 
   const handleLogin = async (role: UserRole) => {
     setIsLoading(true);
-    // In a real app, we would pass the role to the auth service or update profile after sign in
-    // For this demo, we can assume the auth service handles basic sign in
-    // and we might handle role-specific logic after auth state updates.
-    // However, signInWithGoogle doesn't accept role directly in our current implementation.
-    // We will stick to the generic sign in and rely on the useEffect above to route logic.
-    await signInWithGoogle();
+    // Pass the desired role to the auth service
+    await signInWithGoogle(role);
   };
 
   const handleLogout = async () => {
