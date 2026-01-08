@@ -46,19 +46,30 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
       </nav>
 
       <section className="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden bg-black">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/10 rounded-full blur-[120px] -z-10 pointer-events-none opacity-40"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-secondary-accent/5 rounded-full blur-[100px] -z-10 pointer-events-none opacity-20"></div>
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-highlight border border-white/5 text-primary text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in-up shadow-glow-card">
+        <div className="absolute inset-0 w-full h-full -z-10 pointer-events-none overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: 'linear-gradient(rgba(16, 185, 129, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(16, 185, 129, 0.3) 1px, transparent 1px)', backgroundSize: '60px 60px', maskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)', WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 80%)' }}>
+          </div>
+          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full mix-blend-screen filter blur-[100px] opacity-30 animate-blob"></div>
+          <div className="absolute top-20 right-1/4 w-[400px] h-[400px] bg-primary/10 rounded-full mix-blend-screen filter blur-[80px] opacity-20 animate-blob" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute -bottom-32 left-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full mix-blend-screen filter blur-[120px] opacity-30 animate-blob" style={{ animationDelay: '4s' }}></div>
+          <div className="absolute top-1/2 left-10 w-64 h-64 bg-secondary-accent/5 rounded-full mix-blend-screen filter blur-[80px] opacity-10 animate-blob" style={{ animationDelay: '5s' }}></div>
+          <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-black to-transparent"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-highlight/80 backdrop-blur-md border border-white/10 text-primary text-xs font-bold uppercase tracking-wider mb-8 animate-fade-in-up shadow-glow-card">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
             Live in Bangalore & Mumbai
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-white animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-white animate-fade-in-up drop-shadow-lg" style={{ animationDelay: '0.1s' }}>
             Turn Surplus Food into <br className="hidden md:block" />
-            <span className="text-gradient-primary">Social Impact.</span>
+            <span className="text-gradient-primary relative">
+              Social Impact.
+              <span className="absolute -inset-1 bg-primary/20 blur-xl -z-10 rounded-full opacity-50"></span>
+            </span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-12 font-light leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             The hyperlocal logistics platform connecting restaurants with surplus food to nearby shelters and NGOs instantly.
@@ -67,14 +78,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             <a
               href="#roles"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black transition-all duration-300 bg-primary rounded-xl hover:bg-primary-hover hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)]"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black transition-all duration-300 bg-primary rounded-xl hover:bg-primary-hover hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] z-20"
             >
               Get Started
               <span className="material-icons-round ml-2 text-sm">arrow_forward</span>
             </a>
             <a
               href="#"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white transition-all duration-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 focus:outline-none backdrop-blur-sm"
+              className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white transition-all duration-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 focus:outline-none backdrop-blur-sm z-20"
             >
               <span className="material-icons-round mr-2 text-primary">play_circle_filled</span>
               Watch Video
