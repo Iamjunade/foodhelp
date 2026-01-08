@@ -49,3 +49,16 @@ export const updateDonationStatus = async (
         throw error;
     }
 };
+
+export const registerRestaurant = async (profile: Omit<import("../types").RestaurantProfile, "isVerified" | "createdAt">) => {
+    try {
+        await addDoc(collection(db, "restaurants"), {
+            ...profile,
+            isVerified: false,
+            createdAt: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error registering restaurant: ", error);
+        throw error;
+    }
+};

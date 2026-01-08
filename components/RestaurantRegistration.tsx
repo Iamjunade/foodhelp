@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { UserRole } from '../types';
 import { Store, MapPin, Phone, User, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
 
+import { registerRestaurant } from '../services/firestoreService';
+
 interface RestaurantRegistrationProps {
     onComplete: () => void;
-    currentUser: { displayName?: string | null; email?: string | null } | null;
+    currentUser: { displayName?: string | null; email?: string | null; uid: string } | null;
 }
 
 const RestaurantRegistration: React.FC<RestaurantRegistrationProps> = ({ onComplete, currentUser }) => {
@@ -19,11 +21,25 @@ const RestaurantRegistration: React.FC<RestaurantRegistrationProps> = ({ onCompl
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!currentUser) return;
+
         setIsLoading(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setIsLoading(false);
-        onComplete();
+        try {
+            await registerRestaurant({
+                userId: currentUser.uid,
+                businessName: formData.businessName,
+                fssaiLicense: formData.fssaiLicense,
+                contactPerson: formData.contactPerson,
+                phone: formData.phone,
+                address: formData.address
+            });
+            onComplete();
+        } catch (error) {
+            console.error("Registration failed", error);
+            alert("Registration failed. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
