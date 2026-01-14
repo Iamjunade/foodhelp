@@ -75,42 +75,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         </div>
       </section>
 
-      <section className="py-12 border-y border-white/5 bg-surface-highlight/30 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap justify-center items-center gap-y-8 gap-x-12 md:gap-24 opacity-80 hover:opacity-100 transition-opacity duration-300">
-            <div className="flex items-center space-x-4 group cursor-default">
-              <div className="p-2 rounded-lg bg-white/5 group-hover:bg-primary/10 transition-colors">
-                <span className="material-icons-round text-gray-400 group-hover:text-primary transition-colors text-xl">verified_user</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-sm tracking-wider text-white uppercase">Safety First</span>
-                <span className="text-xs text-gray-500">Quality Assured</span>
-              </div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
-            <div className="flex items-center space-x-4 group cursor-default">
-              <div className="p-2 rounded-lg bg-white/5 group-hover:bg-primary/10 transition-colors">
-                <span className="material-icons-round text-gray-400 group-hover:text-primary transition-colors text-xl">timeline</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-sm tracking-wider text-white uppercase">Real-Time</span>
-                <span className="text-xs text-gray-500">Live Tracking</span>
-              </div>
-            </div>
-            <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
-            <div className="flex items-center space-x-4 group cursor-default">
-              <div className="p-2 rounded-lg bg-white/5 group-hover:bg-primary/10 transition-colors">
-                <span className="material-icons-round text-gray-400 group-hover:text-primary transition-colors text-xl">policy</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-sm tracking-wider text-white uppercase">Compliant</span>
-                <span className="text-xs text-gray-500">FSSAI Certified</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Video Section */}
       <section className="py-24 bg-black relative overflow-hidden">
