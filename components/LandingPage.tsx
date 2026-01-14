@@ -112,6 +112,34 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin }) => {
         </div>
       </section>
 
+      {/* Video Section */}
+      <section className="py-24 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-surface-highlight/10 to-transparent pointer-events-none"></div>
+        <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm text-gray-400">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            See It In Action
+          </div>
+
+          <div className="relative group rounded-2xl overflow-hidden shadow-2xl shadow-primary/20 border border-white/10 bg-surface aspect-video">
+            <video
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src="/site-video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-32 bg-black relative" id="roles">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-6 relative z-10">
