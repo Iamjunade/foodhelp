@@ -5,9 +5,10 @@ import {
     User as FirebaseUser,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    updateProfile
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { UserRole } from "../types";
 
@@ -25,6 +26,9 @@ export const signUpWithEmailAndPassword = async (email: string, password: string
     try {
         const result = await createUserWithEmailAndPassword(auth, email, password);
         const user = result.user;
+
+        // Update display name
+        await updateProfile(user, { displayName: name });
 
         // Create user profile in Firestore
         await setDoc(doc(db, "users", user.uid), {
@@ -58,7 +62,7 @@ export const loginWithEmailAndPassword = async (email: string, password: string)
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
 
-        let role = UserRole.DONOR;
+        let role = UserRole.PENDING; // Default if not found
         if (userDoc.exists()) {
             role = userDoc.data().role as UserRole;
         }
@@ -85,7 +89,8 @@ export const signInWithGoogle = async (desiredRole?: UserRole): Promise<UserProf
         const userDocRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userDocRef);
 
-        let role = desiredRole || UserRole.DONOR; // Default role if not provided
+
+        let role = desiredRole || UserRole.PENDING; // Default to PENDING for new users
 
         if (userDoc.exists()) {
             role = userDoc.data().role as UserRole;
@@ -115,6 +120,16 @@ export const signInWithGoogle = async (desiredRole?: UserRole): Promise<UserProf
     }
 };
 
+export const updateUserRole = async (uid: string, role: UserRole): Promise<void> => {
+    try {
+        const userDocRef = doc(db, "users", uid);
+        await updateDoc(userDocRef, { role });
+    } catch (error) {
+        console.error("Error updating user role", error);
+        throw error;
+    }
+};
+
 export const signOutUser = async () => {
     try {
         await signOut(auth);
@@ -128,7 +143,7 @@ export const subscribeToAuthChanges = (callback: (user: UserProfile | null) => v
         if (firebaseUser) {
             const userDocRef = doc(db, "users", firebaseUser.uid);
             const userDoc = await getDoc(userDocRef);
-            const role = userDoc.exists() ? (userDoc.data().role as UserRole) : UserRole.DONOR;
+            const role = userDoc.exists() ? (userDoc.data().role as UserRole) : UserRole.PENDING;
 
             callback({
                 uid: firebaseUser.uid,

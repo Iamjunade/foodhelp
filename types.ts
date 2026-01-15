@@ -2,7 +2,8 @@ export enum UserRole {
   DONOR = 'DONOR',
   RECIPIENT = 'RECIPIENT',
   RESCUER = 'RESCUER',
-  ADMIN = 'ADMIN' // For seeing the architecture docs
+  ADMIN = 'ADMIN', // For seeing the architecture docs
+  PENDING = 'PENDING'
 }
 
 export enum DonationStatus {
