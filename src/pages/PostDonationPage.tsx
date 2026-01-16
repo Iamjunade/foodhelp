@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { subscribeToAuthChanges, UserProfile } from '../../services/authService';
-import DashboardLayout from '../../components/dashboard/DashboardLayout';
+import DashboardLayout from '../components/dashboard/DashboardLayout';
 import DonationForm from '../../components/DonationForm';
 import { Loader2 } from 'lucide-react';
 

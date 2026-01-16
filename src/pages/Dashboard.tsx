@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { subscribeToAuthChanges, updateUserRole, UserProfile } from '../../services/authService';
 import { subscribeToDonations, updateDonationStatus, deleteDonation } from '../../services/firestoreService';
 import { UserRole, Donation, DonationStatus } from '../../types';
-import DashboardLayout from '../../components/dashboard/DashboardLayout';
-import OnboardingModal from '../../components/dashboard/OnboardingModal';
-import DonorHome from '../../components/dashboard/DonorHome';
-import RecipientHome from '../../components/dashboard/RecipientHome';
+import DashboardLayout from '../components/dashboard/DashboardLayout';
+import OnboardingModal from '../components/dashboard/OnboardingModal';
+import DonorHome from '../components/dashboard/DonorHome';
+import RecipientHome from '../components/dashboard/RecipientHome';
 import { Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
