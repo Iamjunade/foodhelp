@@ -146,17 +146,29 @@ export const subscribeToAuthChanges = (callback: (user: UserProfile | null) => v
     }
     return onAuthStateChanged(auth, async (firebaseUser) => {
         if (firebaseUser) {
-            const userDocRef = doc(db, "users", firebaseUser.uid);
-            const userDoc = await getDoc(userDocRef);
-            const role = userDoc.exists() ? (userDoc.data().role as UserRole) : UserRole.PENDING;
+            try {
+                const userDocRef = doc(db, "users", firebaseUser.uid);
+                const userDoc = await getDoc(userDocRef);
+                const role = userDoc.exists() ? (userDoc.data().role as UserRole) : UserRole.PENDING;
 
-            callback({
-                uid: firebaseUser.uid,
-                email: firebaseUser.email,
-                displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || null,
-                photoURL: firebaseUser.photoURL,
-                role
-            });
+                callback({
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || null,
+                    photoURL: firebaseUser.photoURL,
+                    role
+                });
+            } catch (error) {
+                console.error("Error fetching user profile:", error);
+                // Fallback if we can't read the profile (e.g. permission error)
+                callback({
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    displayName: firebaseUser.displayName || firebaseUser.email?.split('@')[0] || null,
+                    photoURL: firebaseUser.photoURL,
+                    role: UserRole.PENDING // Default to pending so app doesn't crash
+                });
+            }
         } else {
             callback(null);
         }
