@@ -173,13 +173,14 @@ const NGORegistration: React.FC<NGORegistrationProps> = ({ onComplete, currentUs
 
                         {/* Google Maps Link */}
                         <div className="space-y-1.5">
-                            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Google Maps Business Link <span className="text-xs text-gray-600 normal-case">(Optional)</span></label>
+                            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Google Maps Business Link</label>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <MapPin className="h-5 w-5 text-gray-500 group-focus-within:text-orange-500 transition-colors" />
                                 </div>
                                 <input
                                     type="url"
+                                    required
                                     value={formData.googleBusinessLink}
                                     onChange={(e) => setFormData({ ...formData, googleBusinessLink: e.target.value })}
                                     className="w-full bg-surface-highlight border border-white/10 text-white text-sm rounded-xl focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 block w-full pl-12 p-3.5 placeholder-gray-600 transition-all"
